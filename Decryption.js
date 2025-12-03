@@ -34,4 +34,5 @@ const decryptSeed = async (encrypted_seed) => {
 //     const seed = await decryptSeed(encrypted_seed);
 //     fs.writeFileSync("./data/seed.txt", seed);
 // })();
+//Seed Generation
 export default decryptSeed;
