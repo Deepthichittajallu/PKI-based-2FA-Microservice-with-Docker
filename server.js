@@ -11,8 +11,6 @@ server.use(express.urlencoded({ extended: false }));
 server.use(express.static("public"));
 
 const PRIVATE_KEY = fs.readFileSync('./keys/student_private.pem', 'utf8');
-const SEED = fs.readFileSync('./data/seed.txt', 'utf8').trim()
-
 server.get('/', (req, res) => {
     res.status(200).json({
         developer:"Lakshmi Deepthi Chittajallu",
@@ -53,6 +51,7 @@ server.post('/decrypt-seed', async (req, res) => {
 
 server.get('/generate-2fa', async (req, res) => {
     try {
+        const SEED = fs.readFileSync('/data/seed.txt', 'utf8').trim()
         const code = generateTOTP(SEED);
         return res.status(200).json({
             code: code,
@@ -73,6 +72,7 @@ server.post('/verify-2fa', async (req, res) => {
                 error: "Missing code"
             })
         }
+        const SEED = fs.readFileSync('/data/seed.txt', 'utf8').trim()
         const { code } = req.body;
         if(!code || code === "") {
             return res.status(400).json({
